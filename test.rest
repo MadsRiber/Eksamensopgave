@@ -1,0 +1,11 @@
+POST http://localhost:3000/posts
+Content-Type: application/json
+
+{
+    "username": "Mads",
+    "password": "mads",
+    "email": "madsriber1999@gmail.com",
+    "city": "Frederiksberg",
+    "interests": "fodbold",
+    "gender": "Male"
+}
