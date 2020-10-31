@@ -6,7 +6,9 @@ const userSchema = mongoose.Schema({
     email: String,
     city: String,
     interests: String,
-    gender: String
+    gender: Object,
+    preferredGender: String,
+    dob: Date
 });
 
 userModel = mongoose.model("Users", userSchema);

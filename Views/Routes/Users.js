@@ -19,7 +19,9 @@ const newUser = new User({
     email: req.body.email,
     city: req.body.city,
     interests: req.body.interests,
-    gender: req.body.gender
+    gender: req.body.gender,
+    preferredGender: req.body.preferredGender,
+    dob: req.body.dob
 });
 
 newUser.save()

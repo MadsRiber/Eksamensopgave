@@ -4,6 +4,7 @@ const app = express();
 const mongoose = require("mongoose")
 const bodyParser = require("body-parser");
 
+
 //Jeg kan nu lave routes
 const userRoute = require("./Views/Routes/Users")
 
@@ -15,7 +16,7 @@ app.use(bodyParser.json());
 app.use("/users", userRoute);
 
 app.get("/", (req,res)=>{
-    res.send("it works");
+    res.send("");
 });
 
 
