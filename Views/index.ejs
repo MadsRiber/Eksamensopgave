@@ -46,19 +46,19 @@
             <button type="submit" id="submitButton">Sign up</button>
         </form>
         </div>
-
+        <form action="http://localhost:3000/admin" method="POST" role="form" enctype="application/json">
         <div id="loginDiv">
             <h1 id="h1Login">Login</h1>
             <br>
-            <label for="username">Username:</label>
-            <input type="text" placeholder="Username">
+            <label for="email">Email:</label>
+            <input name="email" type="text" placeholder="test@gmailcom">
             <br><br>
             <label for="password">Password:</label>
-            <input type="password" placeholder="Password">
+            <input name="password" type="password" placeholder="Password">
             <br><br>
             <button type="submit" id="submitButton">Login</button>
         </div>
-
+    </form>
     </div>
 </body>
 </html>
