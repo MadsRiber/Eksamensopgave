@@ -1,0 +1,12 @@
+#profil{
+    background-color: brown;
+    width:  40%;
+    height: 600px;
+}
+#header {
+    text-align: center;
+    padding-top: 20px;
+}
+#username {
+    text-align: center;
+}

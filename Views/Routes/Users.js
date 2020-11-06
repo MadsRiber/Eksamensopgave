@@ -7,9 +7,6 @@ const mongoose = require("mongoose");
 router.use(bodyparser.json());
 router.use(bodyparser.urlencoded({extended: true}));
 
-router.get("/", (req,res)=>{
-    res.send("it posts");
-});
 
 router.post("/", (req, res) => {
 
@@ -25,9 +22,9 @@ const newUser = new User({
 });
 
 newUser.save()
-.then(result => {
-    if (result) {
-        res.status(200).json(result);
+.then(user => {
+    if (user) {
+        res.status(200).render("homepage.ejs", {user: user});
     } else {
         res.status(404).json({message: "couldn't create user"});
     }

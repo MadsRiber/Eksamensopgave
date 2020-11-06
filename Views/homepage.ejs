@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="/homepageStyle.css">
+</head>
+<body>
+    <div id="profil">
+        <h1 id="header">Din Profil</h1>
+        <br><br>
+        
+        <% if (user) { %>
+            <h3 id="username"><%= user.username %></h3>
+          
+    
+          <ul>
+            
+                <li>Email: <%= user.email %></li>
+             <br>
+                <li>City: <%= user.city %></li>
+             <br>
+                <li>Gender: <%= user.gender%></li>
+             <br>
+                <li>Preferred Gender: <%= user.preferredGender%></li>
+              <br>
+                <li>Date of Birth: <%= user.dob%></li>
+              <% } %>
+              <br>
+                <li>Interests: <%= user.interests%></li>
+          </ul>
+    </div>
+    
+</body>
+</html>
