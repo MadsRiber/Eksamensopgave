@@ -19,5 +19,7 @@ app.get("/", (req,res)=>{
     res.send("");
 });
 
+app.set("view engine", "ejs")
+
 
 app.listen(3000);
