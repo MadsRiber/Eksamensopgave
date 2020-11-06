@@ -6,9 +6,16 @@ const mongoose = require("mongoose");
 
 router.use(bodyparser.json());
 router.use(bodyparser.urlencoded({extended: true}));
+router.use(express.static("../css"));
 
 
-router.post("/", (req, res) => {
+
+router.post("/signup", (req, res) => {
+
+    User.find({email: req.body.email})
+    .then(Users => {
+        if(Users.length < 1){
+
 
 const newUser = new User({
     username: req.body.username,
@@ -36,7 +43,42 @@ newUser.save()
         res.status(404).json({error: "Error"});
     }
 });
+}else{
+    res.status(404).json({message: "User already exists"})
+}
+})
+.catch(err =>{
+    if(err) {
+        res.status(500).json({message: "error"})
+    }
+})
 
 });
+
+router.post("/login", (req, res) => {
+if (req.body.email != null){
+    User.find({email: req.body.email})
+    .then(users => {
+    
+        if(users < 1) {
+    
+            res.status(404).json({error: "Not and existing user"});
+        }
+        if (users[0].password == req.body.password) {
+            res.status(200).render("homepage.ejs", {user: users[0]});
+        } else {
+            res.status(404).json({message: "Unauthorized"});
+        }
+    })
+    .catch(err => {
+            if(err) {
+                res.status(500).json({error: err});
+            } else {
+                res.status(404).json({error: "Error"});
+            }
+        });
+    }
+    });
+
 
 module.exports = router;

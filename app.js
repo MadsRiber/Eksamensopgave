@@ -18,7 +18,7 @@ app.use(bodyParser.json());
 
 app.use("/users", userRoute);
 app.use("/admin", adminRoute);
-app.use(express.static("./Views"));
+app.use(express.static("./Views/css/"));
 
 
 app.set("view-engine", "ejs");
