@@ -30,6 +30,11 @@
                 <li>Interests: <%= user.interests%></li>
                 <% } %>
           </ul>
+          <a href="/users/login/<%= user.id %>/edit">Edit</a>
+          <!-- Bruger method-override for at kunne bruge put og delete i form. -->
+          <form action="/users/login/<%= user.id %>?_method=DELETE" method="POST">
+              <button type="submit">Delete</button>
+          </form>
     </div>
     
 </body>

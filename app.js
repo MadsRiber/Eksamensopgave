@@ -3,6 +3,7 @@ const express = require("express");
 const app = express();
 const mongoose = require("mongoose");
 const bodyParser = require("body-parser");
+const methodOverride = require("method-override")
 
 
 
@@ -15,7 +16,7 @@ mongoose.connect(process.env.DB_CONNECTION,
     {useNewUrlParser: true, useUnifiedTopology: true }, () => console.log("Connected to DB"));
     
 app.use(bodyParser.json());
-
+app.use(methodOverride("_method"))
 app.use("/users", userRoute);
 app.use("/admin", adminRoute);
 app.use(express.static("./Views/css/"));

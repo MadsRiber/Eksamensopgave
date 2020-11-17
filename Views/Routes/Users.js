@@ -80,5 +80,30 @@ if (req.body.email != null){
     }
     });
 
+    //Delete funktionalitet
+router.delete("/login/:id", async (req, res)=>{
+    let user
+    try{
+        user = await User.findById(req.params.id)
+        await user.remove()
+        res.redirect("/")
+    } catch{
+        if(user == null){
+            res.redirect('/')
+        }else{
+            res.redirect(`/users/login/${user.id}`)
+            }
+        }
+    }
+    
+);
+
+router.get("/login/:id/edit", (req,res)=>{
+    res.send("Edit author" + req.params.id)
+})
+
+router.put("/login/:id", (req,res)=>{
+    res.send("Update user " + req.params.id)
+})
 
 module.exports = router;
