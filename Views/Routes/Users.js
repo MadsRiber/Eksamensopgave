@@ -10,6 +10,7 @@ router.use(express.static("../css"));
 
 
 
+
 router.post("/signup", (req, res) => {
 
     User.find({email: req.body.email})
@@ -107,13 +108,12 @@ router.get("/login/:id/edit", async (req,res)=>{try{
 
 })
 
-router.put('/login/:id', async (req, res) => {
+router.put('/login/update/:id', async (req, res) => {   
     let user
     try {
       user = await User.findById(req.params.id)
-      user.name = req.body.name
       await user.save()
-      res.redirect(`/login/${user.id}`)
+      res.redirect("/login")
     } catch {
       if (user == null) {
         res.redirect('/')
@@ -130,5 +130,9 @@ router.put('/login/:id', async (req, res) => {
 /*router.put("/login/:id", (req,res)=>{
     res.send("Update user " + req.params.id)
 })*/
+
+router.get('/logout', function(req, res, next) {
+    res.redirect('/');
+  });
 
 module.exports = router;

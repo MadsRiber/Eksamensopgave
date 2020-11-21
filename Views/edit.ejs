@@ -7,7 +7,7 @@
     <link rel="stylesheet" type="text/css" href="/homepageStyle.css">
 </head>
 <body>
-  <form action="/users/login/<%= user.id %>?_method=PUT">
+  <form method="POST" action="http://localhost:3000/users/login/update/<%= user.id %>?_method=PUT">
     <div id="profil">
         <h1 id="header">Din Profil</h1>
         <br><br>

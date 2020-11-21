@@ -5,7 +5,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <link rel="stylesheet" type="text/css" href="/homepageStyle.css">
-</head>
+    <!--Kode så man ikke kan komme til bage på siden ved brug af back arrow, efter man er logget ud-->
+    <script type = "text/javascript" >
+      function preventBack(){window.history.forward();}
+       setTimeout("preventBack()", 0);
+       window.onunload=function(){null};
+   </script>
+  </head>
 <body>
     <div id="profil">
         <h1 id="header">Din Profil</h1>
@@ -36,7 +42,11 @@
           <form action="/users/login/<%= user.id %>?_method=DELETE" method="POST">
               <button type="submit">Delete</button>
           </form>
+          <form action="http://localhost:3000/users/logout" method="GET" role="form" enctype="application/json">
+            <button type="submit">Logout</button>
+          </form>
     </div>
+
     
 </body>
 </html>
