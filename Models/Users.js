@@ -8,7 +8,8 @@ const userSchema = mongoose.Schema({
     interests: String,
     gender: Object,
     preferredGender: String,
-    dob: Date
+    dob: Date,
+    likes: Array
 });
 
 userModel = mongoose.model("Users", userSchema);

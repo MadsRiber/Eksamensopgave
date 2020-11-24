@@ -57,6 +57,7 @@ newUser.save()
 });
 
 router.post("/login", (req, res) => {
+    
 if (req.body.email != null){
     User.find({email: req.body.email})
     .then(users => {
@@ -66,8 +67,23 @@ if (req.body.email != null){
             res.status(404).json({error: "Not and existing user"});
         }
         if (users[0].password == req.body.password) {
-            res.status(200).render("homepage.ejs", {user: users[0]});
-        } else {
+            User.find({email: {$ne: req.body.email} })
+            .then(listUsers =>{
+            res.status(200).render("homepage.ejs", {user: users[0], "listUsers": listUsers});
+        })}
+        
+        // Kode til at den viser en tilfældig User, og ikke bare alle
+        /*if (users[0].password == req.body.password) {
+            User.find({email: {$ne: req.body.email} })
+            .then(listUsers =>{
+             var random = Math.floor(Math.random() * (listUsers.length))
+            res.status(200).render("homepage.ejs", {user: users[0], "listUsers": listUsers[random]});
+        })} 
+        
+        
+        */
+        
+        else {
             res.status(404).json({message: "Unauthorized"});
         }
     })
@@ -99,7 +115,7 @@ router.delete("/login/:id", async (req, res)=>{
     
 );
 
-//Update funktionalitet
+//Update
 router.post("/update", (req, res) =>{
     var updatedUser = {
     username: req.body.username,
@@ -112,7 +128,7 @@ router.post("/update", (req, res) =>{
     dob: req.body.dob}
     
     User.updateOne({_id: req.body.id}, {$set: updatedUser})
-    .then( result =>{
+    .then(result =>{
         res.redirect("http://localhost:3000")
     }
 ).catch(err => {
@@ -141,5 +157,11 @@ router.get("/login/:id/edit", async (req,res)=>{try{
 router.get('/logout', function(req, res, next) {
     res.redirect('/');
   });
+
+router.post("/likes", (req, res) =>{
+    likesUpdated ={
+        likes: req.body.likes
+    }
+})
 
 module.exports = router;

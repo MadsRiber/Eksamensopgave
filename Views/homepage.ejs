@@ -11,8 +11,15 @@
        setTimeout("preventBack()", 0);
        window.onunload=function(){null};
    </script>
+   <script type="text/javascript">
+  function remove() {
+    var elem = document.getElementById('user2');
+    elem.parentNode.removeChild(elem);
+    return false;
+}</script>
   </head>
 <body>
+  <div id="mainDiv">
     <div id="profil">
         <h1 id="header">Din Profil</h1>
         <br><br>
@@ -47,6 +54,38 @@
           </form>
     </div>
 
+    <div id="matches">
+
+      <% if (listUsers) { %>
+        <h1 id="header2">Possible Matches</h1>
+        
+       
+        <ul>
+          <h3>User 1</h3>
+            <li> Name: <%=listUsers[0].username%> </li>
+            <li> Age: <%=listUsers[0].dob%> </li>
+            <li> Interest: <%=listUsers[0].interests%> </li>
+            <li> Email: <%=listUsers[0].email%> </li>
+            <button type="submit">Like</button>
+            <button type="submit">Dislike</button>
+        
+<br>
+      <div id="user2">
+    <h3>User 2</h3>
+            <li> Name: <%=listUsers[1].username%> </li>
+            <li> Age: <%=listUsers[1].dob%> </li>
+            <li> Interest: <%=listUsers[1].interests%> </li>
+            <li> Email: <%=listUsers[1].email%> </li>
+            <button type="submit">Like</button>
+            <input type="button" value="Dislike" onclick="remove()"/>
+      </div>
+<br> 
+
+        </ul>
+        <% } %>
+
+    </div>
+  </div>
     
 </body>
 </html>
