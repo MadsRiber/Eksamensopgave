@@ -7,16 +7,24 @@
     <link rel="stylesheet" type="text/css" href="/homepageStyle.css">
 </head>
 <body>
-  <form method="POST" action="http://localhost:3000/users/login/update/<%= user.id %>?_method=PUT">
+  
     <div id="profil">
+      <form method="POST" action="http://localhost:3000/users/update">
         <h1 id="header">Din Profil</h1>
         <br><br>
         
         <% if (user) { %>
     
           <ul>
+            <label for="id">Your ID:</label>
+          <input type="text" value="<%=user.id %>" name="id">
+          <br><br>
             <label for="username">Username:</label>
           <input type="text" value="<%= user.username %>"" id="username" name="username">
+              <button type="submit">Update</button>
+            <br><br>
+            <label for="password">Password:</label>
+            <input type="text" value="<%=user.password %>" name="password">
               <button type="submit">Update</button>
             <br><br>
             <label for="email">Email:</label>
@@ -54,7 +62,7 @@
           </ul>
           <br><br>
           <a href="/users/signup">Cancel</a>
+        </form>
     </div>
-  </form>
 </body>
 </html>

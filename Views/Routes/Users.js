@@ -99,6 +99,33 @@ router.delete("/login/:id", async (req, res)=>{
     
 );
 
+//Update funktionalitet
+router.post("/update", (req, res) =>{
+    var updatedUser = {
+    username: req.body.username,
+    password: req.body.password,
+    email: req.body.email,
+    city: req.body.city,
+    interests: req.body.interests,
+    gender: req.body.gender,
+    preferredGender: req.body.preferredGender,
+    dob: req.body.dob}
+    
+    User.updateOne({_id: req.body.id}, {$set: updatedUser})
+    .then( result =>{
+        res.redirect("http://localhost:3000")
+    }
+).catch(err => {
+    if(err) {
+        res.status(500).json({error: err});
+    } else {
+        res.status(404).json({error: "Error"});
+    }
+})
+});
+// Update kode fra Mathias.
+
+
 router.get("/login/:id/edit", async (req,res)=>{try{
     const user = await User.findById(req.params.id)
     res.render("edit.ejs", {user: user })
@@ -108,28 +135,8 @@ router.get("/login/:id/edit", async (req,res)=>{try{
 
 })
 
-router.put('/login/update/:id', async (req, res) => {   
-    let user
-    try {
-      user = await User.findById(req.params.id)
-      await user.save()
-      res.redirect("/login")
-    } catch {
-      if (user == null) {
-        res.redirect('/')
-      } else {
-        res.render('users/login/edit', {
-          user: user,
-          errorMessage: 'Error updating user'
-        })
-      }
-    }
-  })
 
 
-/*router.put("/login/:id", (req,res)=>{
-    res.send("Update user " + req.params.id)
-})*/
 
 router.get('/logout', function(req, res, next) {
     res.redirect('/');
