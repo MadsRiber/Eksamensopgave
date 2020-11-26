@@ -160,8 +160,19 @@ router.get('/logout', function(req, res, next) {
 
 router.post("/likes", (req, res) =>{
     likesUpdated ={
-        likes: req.body.likes
+        likes: req.body.id
+    }
+    User.updateOne({_id: req.body.id}, {$push: {"likes": likesUpdated}})
+    .then(result =>{
+        res.redirect("http://localhost:3000")
+    }
+).catch(err => {
+    if(err) {
+        res.status(500).json({error: err});
+    } else {
+        res.status(404).json({error: "Error"});
     }
 })
+});
 
 module.exports = router;

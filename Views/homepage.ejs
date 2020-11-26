@@ -62,11 +62,14 @@
        
         <ul>
           <h3>User 1</h3>
+          <form action="http://localhost:3000/users/likes" method="POST">
             <li> Name: <%=listUsers[0].username%> </li>
             <li> Age: <%=listUsers[0].dob%> </li>
             <li> Interest: <%=listUsers[0].interests%> </li>
             <li> Email: <%=listUsers[0].email%> </li>
+            <input type="text" data-id="<%= user.id %>" value="<%=listUsers[0].id%>" name="id">
             <button type="submit">Like</button>
+          </form>
             <button type="submit">Dislike</button>
         
 <br>
