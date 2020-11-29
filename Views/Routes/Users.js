@@ -170,21 +170,46 @@ router.post("/:id/likes", async (req, res) =>{
     }
     await User.updateOne({_id: req.params.id}, {$push: {"likes": likesUpdated}})
 
-    await User.findOne(({_id: req.body.id}))
+    User.findOne(({_id: req.body.id}))
     
     
     //User.findOne(({_id: req.params.id}))
     .then(done =>{
-        var likes = done.likes[0]["likes"]
+        let myArray = done.likes
+        for(let i = 0; i < myArray.length; i++){
+            if(myArray[i].likes == req.body.id){
+                console.log("hej")
+                break;
+            }}
+                res.status(200).render("matches.ejs", {"done": done});
+            
+        
+
+
+        /*for(var i = 0; i < ok.length-1; i++){
+            if(ok[i] == req.body.id)
+            console.log(ok[i])
+        }*/
+
+
+        /*ok.forEach((Element) =>{
+            console.log(Element.likes)
+        })
+        var nu = done.likes
+
+        var ok = Object.values(done.likes)*/
+
+        
+        /*var likes1 = done.likes[2]["likes"]
         var likes2 = likesUpdated["likes"]
 
-        if(req.body.id == likes2)
-        console.log(req.body.id, likes, req.params.id, likes2)
-        
+
+        if(req.body.id == likes2 && likes == req.params.id){
+        console.log(req.body.id, likes1, req.params.id, likes2)
+        }*/
         //for(var i = 0; i < likesUpdated.length, i++;)
         //if(likesUpdated == done.id)
         //    console.log(done,likesUpdated)   
-        res.status(200).render("matches.ejs", {"done": done});
         /*for(var i = 0; i < likesUpdated.length; i++)
         if(i == listUsers.id)
         alert("Nice")*/

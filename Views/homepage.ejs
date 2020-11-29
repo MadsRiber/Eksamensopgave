@@ -5,12 +5,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <link rel="stylesheet" type="text/css" href="/homepageStyle.css">
+    
+    
     <!--Kode så man ikke kan komme til bage på siden ved brug af back arrow, efter man er logget ud-->
     <script type = "text/javascript" >
       function preventBack(){window.history.forward();}
        setTimeout("preventBack()", 0);
        window.onunload=function(){null};
    </script>
+
+
    <script type="text/javascript">
   function remove() {
     var elem = document.getElementById('user2');
@@ -18,9 +22,17 @@
     return false;
 }</script>
   </head>
-<body>
+
+
+  <body>
+
+
   <div id="mainDiv">
+
+
     <div id="profil">
+
+
         <h1 id="header">Din Profil</h1>
         <br><br>
         
@@ -46,9 +58,13 @@
           <a href="/users/login/<%= user.id %>/edit">Edit</a>
           <!-- Bruger method-override for at kunne bruge put og delete i form. -->
           <br><br>
+
+
           <form action="/users/login/delete/<%= user.id %>?_method=DELETE" method="POST">
               <button type="submit">Delete</button>
           </form>
+
+
           <form action="http://localhost:3000/users/logout" method="GET" role="form" enctype="application/json">
             <button type="submit">Logout</button>
           </form>
@@ -67,9 +83,13 @@
             <li> Age: <%=listUsers.dob%> </li>
             <li> Interest: <%=listUsers.interests%> </li>
             <li> Email: <%=listUsers.email%> </li>
+            
+            
             <input type="text" value="<%=listUsers.id%>" name="id">
             <button type="submit">Like</button>
           </form>
+          
+          
           <input type="button" value="Dislike" onclick="remove()"/>
         
 
