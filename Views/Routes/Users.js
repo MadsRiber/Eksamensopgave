@@ -69,7 +69,13 @@ if (req.body.email != null){
         if (users[0].password == req.body.password) {
             User.find({email: {$ne: req.body.email} })
             .then(listUsers =>{
-            res.status(200).render("homepage.ejs", {user: users[0], "listUsers": listUsers});
+             var random = Math.floor(Math.random() * (listUsers.length))
+            res.status(200).render("homepage.ejs", {user: users[0], "listUsers": listUsers[random]});
+
+        /*if (users[0].password == req.body.password) {
+            User.find({email: {$ne: req.body.email} })
+            .then(listUsers =>{
+            res.status(200).render("homepage.ejs", {user: users[0], "listUsers": listUsers});*/
         })}
         
         // Kode til at den viser en tilfældig User, og ikke bare alle
@@ -98,7 +104,7 @@ if (req.body.email != null){
     });
 
     //Delete funktionalitet
-router.delete("/login/:id", async (req, res)=>{
+router.delete("/login/delete/:id", async (req, res)=>{
     let user
     try{
         user = await User.findById(req.params.id)
@@ -158,13 +164,33 @@ router.get('/logout', function(req, res, next) {
     res.redirect('/');
   });
 
-router.post("/likes", (req, res) =>{
+router.post("/:id/likes", async (req, res) =>{
     likesUpdated ={
         likes: req.body.id
     }
-    User.updateOne({_id: req.body.id}, {$push: {"likes": likesUpdated}})
-    .then(result =>{
-        res.redirect("http://localhost:3000")
+    await User.updateOne({_id: req.params.id}, {$push: {"likes": likesUpdated}})
+
+    await User.findOne(({_id: req.body.id}))
+    
+    
+    //User.findOne(({_id: req.params.id}))
+    .then(done =>{
+        var likes = done.likes[0]["likes"]
+        var likes2 = likesUpdated["likes"]
+
+        if(req.body.id == likes2)
+        console.log(req.body.id, likes, req.params.id, likes2)
+        
+        //for(var i = 0; i < likesUpdated.length, i++;)
+        //if(likesUpdated == done.id)
+        //    console.log(done,likesUpdated)   
+        res.status(200).render("matches.ejs", {"done": done});
+        /*for(var i = 0; i < likesUpdated.length; i++)
+        if(i == listUsers.id)
+        alert("Nice")*/
+        //console.log(listUsers[0].id)
+        //console.log(hej)
+        //res.redirect("http://localhost:3000")
     }
 ).catch(err => {
     if(err) {
@@ -173,6 +199,6 @@ router.post("/likes", (req, res) =>{
         res.status(404).json({error: "Error"});
     }
 })
-});
+    });
 
 module.exports = router;

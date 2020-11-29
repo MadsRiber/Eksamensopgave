@@ -46,7 +46,7 @@
           <a href="/users/login/<%= user.id %>/edit">Edit</a>
           <!-- Bruger method-override for at kunne bruge put og delete i form. -->
           <br><br>
-          <form action="/users/login/<%= user.id %>?_method=DELETE" method="POST">
+          <form action="/users/login/delete/<%= user.id %>?_method=DELETE" method="POST">
               <button type="submit">Delete</button>
           </form>
           <form action="http://localhost:3000/users/logout" method="GET" role="form" enctype="application/json">
@@ -62,27 +62,16 @@
        
         <ul>
           <h3>User 1</h3>
-          <form action="http://localhost:3000/users/likes" method="POST">
-            <li> Name: <%=listUsers[0].username%> </li>
-            <li> Age: <%=listUsers[0].dob%> </li>
-            <li> Interest: <%=listUsers[0].interests%> </li>
-            <li> Email: <%=listUsers[0].email%> </li>
-            <input type="text" data-id="<%= user.id %>" value="<%=listUsers[0].id%>" name="id">
+          <form action="http://localhost:3000/users/<%= user.id %>/likes" method="POST">
+            <li> Name: <%=listUsers.username%> </li>
+            <li> Age: <%=listUsers.dob%> </li>
+            <li> Interest: <%=listUsers.interests%> </li>
+            <li> Email: <%=listUsers.email%> </li>
+            <input type="text" value="<%=listUsers.id%>" name="id">
             <button type="submit">Like</button>
           </form>
-            <button type="submit">Dislike</button>
+          <input type="button" value="Dislike" onclick="remove()"/>
         
-<br>
-      <div id="user2">
-    <h3>User 2</h3>
-            <li> Name: <%=listUsers[1].username%> </li>
-            <li> Age: <%=listUsers[1].dob%> </li>
-            <li> Interest: <%=listUsers[1].interests%> </li>
-            <li> Email: <%=listUsers[1].email%> </li>
-            <button type="submit">Like</button>
-            <input type="button" value="Dislike" onclick="remove()"/>
-      </div>
-<br> 
 
         </ul>
         <% } %>
