@@ -8,11 +8,11 @@
     
     
     <!--Kode så man ikke kan komme til bage på siden ved brug af back arrow, efter man er logget ud-->
-    <script type = "text/javascript" >
+    <!--<script type = "text/javascript" >
       function preventBack(){window.history.forward();}
        setTimeout("preventBack()", 0);
        window.onunload=function(){null};
-   </script>
+   </script>-->
 
 
    <script type="text/javascript">
@@ -53,18 +53,18 @@
                 <li>Date of Birth: <%= user.dob%></li>
               <br>
                 <li>Interests: <%= user.interests%></li>
-                <% } %>
+                
           </ul>
           <a href="/users/login/<%= user.id %>/edit">Edit</a>
           <!-- Bruger method-override for at kunne bruge put og delete i form. -->
           <br><br>
-
+          
 
           <form action="/users/login/delete/<%= user.id %>?_method=DELETE" method="POST">
               <button type="submit">Delete</button>
           </form>
 
-
+          
           <form action="http://localhost:3000/users/logout" method="GET" role="form" enctype="application/json">
             <button type="submit">Logout</button>
           </form>
@@ -72,13 +72,15 @@
 
     <div id="matches">
 
-      <% if (listUsers) { %>
+     
         <h1 id="header2">Possible Matches</h1>
         
        
         <ul>
           <h3>User 1</h3>
           <form action="http://localhost:3000/users/<%= user.id %>/likes" method="POST">
+            <% } %>
+            <% if (listUsers) { %>
             <li> Name: <%=listUsers.username%> </li>
             <li> Age: <%=listUsers.dob%> </li>
             <li> Interest: <%=listUsers.interests%> </li>
@@ -90,7 +92,7 @@
           </form>
           
           
-          <input type="button" value="Dislike" onclick="remove()"/>
+          <input type="button" value="Dislike" onclick="window.location.reload()"/>
         
 
         </ul>

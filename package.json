@@ -17,6 +17,7 @@
     "method-override": "^3.0.0",
     "mongoose": "^5.10.11",
     "nodemon": "^2.0.6",
-    "passport": "^0.4.1"
+    "passport": "^0.4.1",
+    "popups": "^1.1.3"
   }
 }

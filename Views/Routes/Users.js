@@ -31,11 +31,13 @@ const newUser = new User({
 
 newUser.save()
 .then(user => {
-    if (user) {
-        res.status(200).render("homepage.ejs", {user: user});
-    } else {
-        res.status(404).json({message: "couldn't create user"});
-    }
+        User.find({email: {$ne: req.body.email} })
+            .then(listUsers =>{
+             var random = Math.floor(Math.random() * (listUsers.length))
+        res.status(200).render("homepage.ejs", {user: user, "listUsers": listUsers[random]});
+    
+    
+})
 })
 .catch(err => {
     if(err) {
@@ -165,65 +167,59 @@ router.get('/logout', function(req, res, next) {
   });
 
 router.post("/:id/likes", async (req, res) =>{
+    //FIKS DET HER SKOD OBJEKT
     likesUpdated ={
         likes: req.body.id
     }
     await User.updateOne({_id: req.params.id}, {$push: {"likes": likesUpdated}})
 
-    User.findOne(({_id: req.body.id}))
+    User.findOne({_id: req.body.id})
     
     
-    //User.findOne(({_id: req.params.id}))
     .then(done =>{
         let myArray = done.likes
         for(let i = 0; i < myArray.length; i++){
-            if(myArray[i].likes == req.body.id){
-                console.log("hej")
+            if(myArray[i].likes == req.params.id && req.body.id == likesUpdated.likes){
+                matchesUpdated = req.body.id
+                User.updateOne({_id: req.params.id}, {$push: {"matches": matchesUpdated}})
+                console.log("virker")
                 break;
+            }
+            else {
+                console.log("virker ikke")
             }}
-                res.status(200).render("matches.ejs", {"done": done});
+
+            User.findOne({_id: req.params.id})
+            .then(user =>{
+                //let array = user.likes
+            //for(let i = 0; i < array.length; i++){
+            User.find({email: {$ne: req.body.email}})
+                //, _id: {$ne: array[i].likes}})
             
-        
+            
+            
+            
+            
 
-
-        /*for(var i = 0; i < ok.length-1; i++){
-            if(ok[i] == req.body.id)
-            console.log(ok[i])
-        }*/
-
-
-        /*ok.forEach((Element) =>{
-            console.log(Element.likes)
+            .then(listUsers =>{
+             var random = Math.floor(Math.random() * (listUsers.length))
+             res.status(200).render("homepage.ejs", {"user": user, "listUsers": listUsers[random]})
+            
+    
         })
-        var nu = done.likes
 
-        var ok = Object.values(done.likes)*/
-
-        
-        /*var likes1 = done.likes[2]["likes"]
-        var likes2 = likesUpdated["likes"]
-
-
-        if(req.body.id == likes2 && likes == req.params.id){
-        console.log(req.body.id, likes1, req.params.id, likes2)
-        }*/
-        //for(var i = 0; i < likesUpdated.length, i++;)
-        //if(likesUpdated == done.id)
-        //    console.log(done,likesUpdated)   
-        /*for(var i = 0; i < likesUpdated.length; i++)
-        if(i == listUsers.id)
-        alert("Nice")*/
-        //console.log(listUsers[0].id)
-        //console.log(hej)
-        //res.redirect("http://localhost:3000")
-    }
-).catch(err => {
+    })
+    
+})      
+.catch(err => {
     if(err) {
         res.status(500).json({error: err});
     } else {
         res.status(404).json({error: "Error"});
     }
-})
-    });
+    })
 
+
+
+});
 module.exports = router;

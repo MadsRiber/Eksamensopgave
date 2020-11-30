@@ -9,7 +9,8 @@ const userSchema = mongoose.Schema({
     gender: Object,
     preferredGender: String,
     dob: Date,
-    likes: Array
+    likes: Array,
+    matches: Array
 });
 
 userModel = mongoose.model("Users", userSchema);
