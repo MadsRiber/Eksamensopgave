@@ -166,51 +166,63 @@ router.get('/logout', function(req, res, next) {
     res.redirect('/');
   });
 
+  
 router.post("/:id/likes", async (req, res) =>{
     //FIKS DET HER SKOD OBJEKT
     likesUpdated ={
         likes: req.body.id
     }
-    await User.updateOne({_id: req.params.id}, {$push: {"likes": likesUpdated}})
+    
+    await User.updateOne({_id: req.params.id}, {$addToSet: {"likes": likesUpdated}})
 
-    User.findOne({_id: req.body.id})
+    const done = await User.findOne({_id: req.body.id})
     
     
-    .then(done =>{
+    //.then(done =>{
         let myArray = done.likes
+        matchesUpdated = req.body.id
+        
         for(let i = 0; i < myArray.length; i++){
             if(myArray[i].likes == req.params.id && req.body.id == likesUpdated.likes){
-                matchesUpdated = req.body.id
-                User.updateOne({_id: req.params.id}, {$push: {"matches": matchesUpdated}})
+
+                await User.updateOne({_id: req.params.id}, {$addToSet: {"matches": matchesUpdated}})
+                
+                await User.updateOne({_id: req.body.id}, {$addToSet: {"matches": matchesUpdated}})
+
                 console.log("virker")
                 break;
             }
             else {
                 console.log("virker ikke")
             }}
+            
 
             User.findOne({_id: req.params.id})
+
             .then(user =>{
-                //let array = user.likes
-            //for(let i = 0; i < array.length; i++){
-            User.find({email: {$ne: req.body.email}})
-                //, _id: {$ne: array[i].likes}})
+                
+            User.find({_id: {$ne: req.params.id}})
+                
             
-            
+                .catch(err => {
+                    if(err) {
+                        res.status(500).json({error: err});
+                    } else {
+                        res.status(404).json({error: "Error"});
+                    }
+                    })
             
             
             
 
             .then(listUsers =>{
              var random = Math.floor(Math.random() * (listUsers.length))
-             res.status(200).render("homepage.ejs", {"user": user, "listUsers": listUsers[random]})
+                res.status(200).render("homepage.ejs", {"user": user, "listUsers": listUsers[random]})
             
     
         })
 
     })
-    
-})      
 .catch(err => {
     if(err) {
         res.status(500).json({error: err});
@@ -219,7 +231,19 @@ router.post("/:id/likes", async (req, res) =>{
     }
     })
 
-
-
 });
+
+router.get("/:id/matches", async (req,res) =>{
+
+    const user = await User.findOne({_id: req.params.id})
+    //for(let i = 0; i < user.matches; i++){
+      const matches = await User.find({_id: {$in: user.matches}})
+      console.log(matches)
+    //}
+    res.render("matches.ejs", {"matches": matches})
+    //res.render("matches.ejs", {"matches": matches[0]})
+})
+
+
+
 module.exports = router;

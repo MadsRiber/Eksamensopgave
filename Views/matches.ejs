@@ -4,16 +4,24 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <link rel="stylesheet" type="text/css" href="/matches.css">
 </head>
 <body>
-    <% if(done) { %>
-        <h3 id="username"><%= done.username %></h3>
-      
-
-      <ul>
+    <div id="matchMainDiv">
+        <h2>Your Matches</h3>
+    <% matches.forEach(function(matches) { %>
         
-            <li>Id: <%= done.id %></li>
-         
-            <% } %>
+            
+                <h4 id="username"><%= matches.username %></h5>
+      
+                    <ul>
+                        <li>Location: <%= matches.city %></li>
+                        <li>Interests: <%= matches.interests %></li>
+                        <li>Age: <%= matches.dob %></li>
+                        <li>Gender: <%= matches.gender %></li>
+                        <br>
+                    </ul>
+            <% }) %>
+        </div>    
 </body>
 </html>

@@ -55,27 +55,31 @@
                 <li>Interests: <%= user.interests%></li>
                 
           </ul>
-          <a href="/users/login/<%= user.id %>/edit">Edit</a>
+          
+          <a type="button" href="/users/login/<%= user.id %>/edit">Edit</a>
           <!-- Bruger method-override for at kunne bruge put og delete i form. -->
           <br><br>
           
 
           <form action="/users/login/delete/<%= user.id %>?_method=DELETE" method="POST">
-              <button type="submit">Delete</button>
+            <button type="submit">Delete</button>
           </form>
-
+<br>
           
           <form action="http://localhost:3000/users/logout" method="GET" role="form" enctype="application/json">
             <button type="submit">Logout</button>
+          </form>
+<br>
+          <form action="/users/<%=user.id%>/matches">
+            <button type="submit">Show matches</button>
           </form>
     </div>
 
     <div id="matches">
 
-     
+
         <h1 id="header2">Possible Matches</h1>
         
-       
         <ul>
           <h3>User 1</h3>
           <form action="http://localhost:3000/users/<%= user.id %>/likes" method="POST">
