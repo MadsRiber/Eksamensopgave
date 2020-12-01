@@ -26,7 +26,7 @@ const newUser = new User({
     interests: req.body.interests,
     gender: req.body.gender,
     preferredGender: req.body.preferredGender,
-    dob: req.body.dob
+    age: req.body.age
 });
 
 newUser.save()
@@ -133,7 +133,7 @@ router.post("/update", (req, res) =>{
     interests: req.body.interests,
     gender: req.body.gender,
     preferredGender: req.body.preferredGender,
-    dob: req.body.dob}
+    age: req.body.age}
     
     User.updateOne({_id: req.body.id}, {$set: updatedUser})
     .then(result =>{
@@ -177,8 +177,6 @@ router.post("/:id/likes", async (req, res) =>{
 
     const done = await User.findOne({_id: req.body.id})
     
-    
-    //.then(done =>{
         let myArray = done.likes
         matchesUpdated = req.body.id
         
@@ -187,8 +185,7 @@ router.post("/:id/likes", async (req, res) =>{
 
                 await User.updateOne({_id: req.params.id}, {$addToSet: {"matches": matchesUpdated}})
                 
-                await User.updateOne({_id: req.body.id}, {$addToSet: {"matches": matchesUpdated}})
-
+                await User.updateOne({_id: req.body.id}, {$addToSet: {"matches": req.params.id}})
                 console.log("virker")
                 break;
             }
@@ -236,12 +233,35 @@ router.post("/:id/likes", async (req, res) =>{
 router.get("/:id/matches", async (req,res) =>{
 
     const user = await User.findOne({_id: req.params.id})
-    //for(let i = 0; i < user.matches; i++){
-      const matches = await User.find({_id: {$in: user.matches}})
-      console.log(matches)
-    //}
-    res.render("matches.ejs", {"matches": matches})
-    //res.render("matches.ejs", {"matches": matches[0]})
+    const matches = await User.find({_id: {$in: user.matches}})
+
+    res.render("matches.ejs", {"matches": matches, "user": user})
+    
+})
+
+router.post("/:id/matches/delete", async (req,res)=>{
+    const user1 = await User.findOne({_id: req.params.id})
+    const user2 = await User.findOne({_id: req.body.id})
+    
+    let myArray = user1.matches
+    let myArray1 = user2.matches
+    console.log(myArray1,myArray)
+        
+        for(let i = 0; i < myArray.length; i++){
+            if(myArray[i].matches == req.body.id){
+                await User.updateOne({_id: req.params.id}, {$pull: {"matches": req.body.id}})
+                
+                await User.updateOne({_id: req.body.id}, {$pull: {"matches": req.params.id}})
+
+                await User.updateOne({_id: req.params.id}, {$pull:{"likes": req.body.id}})
+                console.log("virker")
+                break;
+            }
+            else {
+                console.log("virker ikke")
+            }}
+
+            res.redirect("/")
 })
 
 

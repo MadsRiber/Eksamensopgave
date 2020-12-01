@@ -7,9 +7,13 @@
     <link rel="stylesheet" type="text/css" href="/matches.css">
 </head>
 <body>
+    <% if (user){ %>
     <div id="matchMainDiv">
         <h2>Your Matches</h3>
-    <% matches.forEach(function(matches) { %>
+            <li><%= user.id %></li>
+            <form action="http://localhost:3000/users/<%= user.id %>/matches/delete" method="POST" enctype="application/json"></form>
+            <% } %>
+            <% matches.forEach(function(matches) { %>
         
             
                 <h4 id="username"><%= matches.username %></h5>
@@ -17,11 +21,17 @@
                     <ul>
                         <li>Location: <%= matches.city %></li>
                         <li>Interests: <%= matches.interests %></li>
-                        <li>Age: <%= matches.dob %></li>
+                        <li>Age: <%= matches.age %></li>
                         <li>Gender: <%= matches.gender %></li>
+                        <li><%= matches.id %></li>
                         <br>
                     </ul>
-            <% }) %>
+                    <br>
+                    
+                    <input type="text" value="<%= matches.id %>" name="id">
+                    <button type="submit">Delete</button>
+                </form>
+                <% }) %>
         </div>    
 </body>
 </html>

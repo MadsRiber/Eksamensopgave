@@ -8,7 +8,7 @@ const userSchema = mongoose.Schema({
     interests: String,
     gender: Object,
     preferredGender: String,
-    dob: Date,
+    age: Number,
     likes: Array,
     matches: Array
 });
