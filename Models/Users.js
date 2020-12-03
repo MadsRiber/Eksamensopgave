@@ -1,5 +1,7 @@
 const mongoose = require("mongoose");
 
+
+//Laver min model for user, med mongoose.schema
 const userSchema = mongoose.Schema({
     username: String,
     password: String,

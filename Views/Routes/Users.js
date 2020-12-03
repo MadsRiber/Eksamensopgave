@@ -1,3 +1,4 @@
+//Henter alle de ting jeg skal bruge
 const express = require("express");
 const router = express.Router();
 const User = require("../../Models/Users.js");
@@ -10,11 +11,14 @@ router.use(express.static("../css"));
 
 
 
-
+//Signup-form
 router.post("/signup", (req, res) => {
 
-    User.find({email: req.body.email})
-    .then(Users => {
+//Ser efter om der allerede er en bruger med den ønskede email
+User.find({email: req.body.email})
+
+.then(Users => {
+    //Hvis der ikke er en bruger, laves der er ny
         if(Users.length < 1){
 
 
@@ -28,12 +32,21 @@ const newUser = new User({
     preferredGender: req.body.preferredGender,
     age: req.body.age
 });
-
+//Ny bruger gemmes
 newUser.save()
 .then(user => {
+
+
+    //Finder alle de bruger, som ikke er den bruger man er logget ind med, så jeg kan vise dem igennem min EJS fil.
         User.find({email: {$ne: req.body.email} })
             .then(listUsers =>{
+
+
+                //require flash, så jeg senere kan bruge det.
                 req.flash("message", null)
+
+
+                //Kode til at vise en tilfældig bruger som possible match
              var random = Math.floor(Math.random() * (listUsers.length))
         res.status(200).render("homepage.ejs", {user: user, "listUsers": listUsers[random], message: req.flash("message")});
     
@@ -43,14 +56,18 @@ newUser.save()
 .catch(err => {
     if(err) {
         res.status(500).json({error: err});
+
+    
     } else {
         res.status(404).json({error: "Error"});
     }
 });
+
 }else{
     res.status(404).json({message: "User already exists"})
 }
 })
+
 .catch(err =>{
     if(err) {
         res.status(500).json({message: "error"})
@@ -60,43 +77,35 @@ newUser.save()
 });
 
 router.post("/login", (req, res) => {
-    
+
+//Checker om en bruger eksisterer med den email, der forsøges at logges ind med
 if (req.body.email != null){
+
     User.find({email: req.body.email})
+
     .then(users => {
-    
         if(users < 1) {
     
             res.status(404).json({error: "Not and existing user"});
         }
+        
+        //Checker om password er korrekt
         if (users[0].password == req.body.password) {
             User.find({email: {$ne: req.body.email} })
+
             .then(listUsers =>{
                 req.flash("message", null)
              var random = Math.floor(Math.random() * (listUsers.length))
+
             res.status(200).render("homepage.ejs", {user: users[0], "listUsers": listUsers[random], message: req.flash("message")});
 
-        /*if (users[0].password == req.body.password) {
-            User.find({email: {$ne: req.body.email} })
-            .then(listUsers =>{
-            res.status(200).render("homepage.ejs", {user: users[0], "listUsers": listUsers});*/
         })}
-        
-        // Kode til at den viser en tilfældig User, og ikke bare alle
-        /*if (users[0].password == req.body.password) {
-            User.find({email: {$ne: req.body.email} })
-            .then(listUsers =>{
-             var random = Math.floor(Math.random() * (listUsers.length))
-            res.status(200).render("homepage.ejs", {user: users[0], "listUsers": listUsers[random]});
-        })} 
-        
-        
-        */
         
         else {
             res.status(404).json({message: "Unauthorized"});
         }
     })
+
     .catch(err => {
             if(err) {
                 res.status(500).json({error: err});
@@ -114,9 +123,11 @@ router.delete("/login/delete/:id", async (req, res)=>{
         user = await User.findById(req.params.id)
         await user.remove()
         res.redirect("/")
+
     } catch{
         if(user == null){
             res.redirect('/')
+
         }else{
             res.redirect(`/users/login/${user.id}`)
             }
@@ -138,9 +149,11 @@ router.post("/update", (req, res) =>{
     age: req.body.age}
     
     User.updateOne({_id: req.body.id}, {$set: updatedUser})
+
     .then(result =>{
         res.redirect("http://localhost:3000")
     }
+
 ).catch(err => {
     if(err) {
         res.status(500).json({error: err});
@@ -152,9 +165,12 @@ router.post("/update", (req, res) =>{
 // Update kode fra Mathias.
 
 
-router.get("/login/:id/edit", async (req,res)=>{try{
+router.get("/login/:id/edit", async (req,res) => {
+    
+    try{
     const user = await User.findById(req.params.id)
     res.render("edit.ejs", {user: user })
+    
 } catch {
         res.redirect("/users/login")
 }
