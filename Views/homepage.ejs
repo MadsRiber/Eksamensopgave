@@ -8,11 +8,11 @@
     
     
     <!--Kode så man ikke kan komme til bage på siden ved brug af back arrow, efter man er logget ud-->
-    <!--<script type = "text/javascript" >
+    <script type = "text/javascript" >
       function preventBack(){window.history.forward();}
        setTimeout("preventBack()", 0);
        window.onunload=function(){null};
-   </script>-->
+   </script>
 
 
    <script type="text/javascript">
@@ -55,11 +55,11 @@
                 <li>Interests: <%= user.interests%></li>
                 
           </ul>
-          
-          <a type="button" href="/users/login/<%= user.id %>/edit">Edit</a>
+          <form action="/users/login/<%= user.id %>/edit">
+          <button type="submit">Edit</button>
           <!-- Bruger method-override for at kunne bruge put og delete i form. -->
           <br><br>
-          
+        </form>
 
           <form action="/users/login/delete/<%= user.id %>?_method=DELETE" method="POST">
             <button type="submit">Delete</button>
@@ -79,9 +79,11 @@
 
 
         <h1 id="header2">Possible Matches</h1>
-        
         <ul>
-          <h3>User 1</h3>
+          <% if (message) { %>
+            <h1 id="newMatch"><%= message %></h1>
+            <% } %>
+          
           <form action="http://localhost:3000/users/<%= user.id %>/likes" method="POST">
             <% } %>
             <% if (listUsers) { %>
@@ -91,7 +93,7 @@
             <li> Email: <%=listUsers.email%> </li>
             
             
-            <input type="text" value="<%=listUsers.id%>" name="id">
+            <input type="text" value="<%=listUsers.id%>" name="id" style="display: none">
             <button type="submit">Like</button>
           </form>
           

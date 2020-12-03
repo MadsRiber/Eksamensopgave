@@ -71,8 +71,9 @@ if (req.body.email != null){
         if (users[0].password == req.body.password) {
             User.find({email: {$ne: req.body.email} })
             .then(listUsers =>{
+                req.flash("message", null)
              var random = Math.floor(Math.random() * (listUsers.length))
-            res.status(200).render("homepage.ejs", {user: users[0], "listUsers": listUsers[random]});
+            res.status(200).render("homepage.ejs", {user: users[0], "listUsers": listUsers[random], message: req.flash("message")});
 
         /*if (users[0].password == req.body.password) {
             User.find({email: {$ne: req.body.email} })
@@ -169,9 +170,8 @@ router.get('/logout', function(req, res, next) {
   
 router.post("/:id/likes", async (req, res) =>{
     //FIKS DET HER SKOD OBJEKT
-    likesUpdated ={
-        likes: req.body.id
-    }
+    likesUpdated = req.body.id
+
     
     await User.updateOne({_id: req.params.id}, {$addToSet: {"likes": likesUpdated}})
 
@@ -181,12 +181,14 @@ router.post("/:id/likes", async (req, res) =>{
         matchesUpdated = req.body.id
         
         for(let i = 0; i < myArray.length; i++){
-            if(myArray[i].likes == req.params.id && req.body.id == likesUpdated.likes){
+            if(myArray[i] == req.params.id && req.body.id == likesUpdated){
 
+                req.flash("message", "You have a new match!")
                 await User.updateOne({_id: req.params.id}, {$addToSet: {"matches": matchesUpdated}})
                 
                 await User.updateOne({_id: req.body.id}, {$addToSet: {"matches": req.params.id}})
                 console.log("virker")
+                
                 break;
             }
             else {
@@ -214,7 +216,7 @@ router.post("/:id/likes", async (req, res) =>{
 
             .then(listUsers =>{
              var random = Math.floor(Math.random() * (listUsers.length))
-                res.status(200).render("homepage.ejs", {"user": user, "listUsers": listUsers[random]})
+                res.status(200).render("homepage.ejs", {"user": user, "listUsers": listUsers[random], message: req.flash("message")})
             
     
         })
@@ -247,8 +249,11 @@ router.post("/:id/matches/delete", async (req,res)=>{
     let myArray1 = user2.matches
     console.log(myArray1,myArray)
         
+    //Muligvis slet dette loop, da det gør absolut intet
         for(let i = 0; i < myArray.length; i++){
-            if(myArray[i].matches == req.body.id){
+            if(myArray[i] == req.body.id){
+               // likesUpdated = likes: req.params.id
+                
                 await User.updateOne({_id: req.params.id}, {$pull: {"matches": req.body.id}})
                 
                 await User.updateOne({_id: req.body.id}, {$pull: {"matches": req.params.id}})

@@ -24,3 +24,10 @@
 #header2{
     text-align: center;
 }
+.succes{
+    color: green;
+    margin: 5px;
+}
+#newMatch{
+    color: greenyellow;
+}
