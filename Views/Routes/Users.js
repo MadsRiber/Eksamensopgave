@@ -33,8 +33,9 @@ newUser.save()
 .then(user => {
         User.find({email: {$ne: req.body.email} })
             .then(listUsers =>{
+                req.flash("message", null)
              var random = Math.floor(Math.random() * (listUsers.length))
-        res.status(200).render("homepage.ejs", {user: user, "listUsers": listUsers[random]});
+        res.status(200).render("homepage.ejs", {user: user, "listUsers": listUsers[random], message: req.flash("message")});
     
     
 })

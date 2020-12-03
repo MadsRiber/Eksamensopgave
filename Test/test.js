@@ -3,6 +3,8 @@ const assert = require("assert")
 const User = require("../Models/Users");
 const mongoose = require("mongoose")
 
+
+//https://www.youtube.com/watch?v=2oYtk83FZCA&ab_channel=TheNetNinja
 //describe tests
 describe('Check if user is saved', function(){
 
@@ -20,7 +22,7 @@ describe('Check if user is saved', function(){
             likes: [],
             matches: []
         });
-        user1.save({username: "jens"}).then(function(){
+        user1.save().then(function(){
             assert(user1.isNew === false);
             done();
         })
