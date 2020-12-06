@@ -14,13 +14,6 @@
        window.onunload=function(){null};
    </script>
 
-
-   <script type="text/javascript">
-  function remove() {
-    var elem = document.getElementById('user2');
-    elem.parentNode.removeChild(elem);
-    return false;
-}</script>
   </head>
 
 
@@ -29,9 +22,7 @@
 
   <div id="mainDiv">
 
-
     <div id="profil">
-
 
         <h1 id="header">Din Profil</h1>
         <br><br>
@@ -39,9 +30,7 @@
         <% if (user) { %>
             <h3 id="username"><%= user.username %></h3>
           
-    
           <ul>
-            
                 <li>Email: <%= user.email %></li>
              <br>
                 <li>City: <%= user.city %></li>
@@ -53,8 +42,8 @@
                 <li> Age: <%= user.age%></li>
               <br>
                 <li>Interests: <%= user.interests%></li>
-                
           </ul>
+
           <form action="/users/login/<%= user.id %>/edit">
           <button type="submit">Edit</button>
           <!-- Bruger method-override for at kunne bruge put og delete i form. -->
@@ -75,10 +64,11 @@
           </form>
     </div>
 
+
     <div id="matches">
 
-
         <h1 id="header2">Possible Matches</h1>
+
         <ul>
           <% if (message) { %>
             <h1 id="newMatch"><%= message %></h1>
@@ -97,10 +87,8 @@
             <button type="submit">Like</button>
           </form>
           
-          
           <input type="button" value="Dislike" onclick="window.location.reload()"/>
-        
-
+          
         </ul>
         <% } %>
 

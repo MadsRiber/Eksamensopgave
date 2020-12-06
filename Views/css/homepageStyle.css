@@ -2,18 +2,22 @@
     background-color: brown;
     float: left;
 }
+
 #header {
     text-align: center;
     padding-top: 20px;
 }
+
 #username {
     text-align: center;
 }
+
 #matches{
     border: 20px rgb(12, 12, 12);
     background-color: rgb(32, 31, 95);
     color: white;
 }
+
 #mainDiv{
     color: white;
     display: grid;
@@ -21,13 +25,16 @@
     grid-auto-rows: minmax(500px, auto);
     grid-column-gap: 4em;
 }
+
 #header2{
     text-align: center;
 }
+
 .succes{
     color: green;
     margin: 5px;
 }
+
 #newMatch{
     color: greenyellow;
 }

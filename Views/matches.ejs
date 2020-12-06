@@ -13,7 +13,6 @@
            
             <% matches.forEach(function(matches) { %>
         
-            
                 <h4 id="username"><%= matches.username %></h5>
       
                     <ul>
@@ -24,14 +23,17 @@
                         <li style="display: none;"><%= matches.id %></li>
                         <br>
                     </ul>
+
                     <br>
                     <% if (user){ %>
+
                         <li style="display: none;"><%= user.id %></li>
                         <form action="http://localhost:3000/users/<%= user.id %>/matches/delete" method="POST" enctype="application/json">
                         
                     <input type="text" value="<%= matches.id %>" name="id" style="display: none;">
                     <button type="submit">Delete</button>
                 </form>
+                
                 <% } %>
                 <% }) %>
         </div>    

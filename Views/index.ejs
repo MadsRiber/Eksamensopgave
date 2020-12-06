@@ -4,28 +4,36 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dating</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <link rel="stylesheet" href="style.css">
     <div id="mainDiv">
+
         <div id="signUpDiv">
+
             <form action="http://localhost:3000/users/signup" method="POST" role="form" enctype="application/json">
             <h1 id="h1SignUp">Sign Up</h1>
+
             <label for="username">Username:</label>
             <input type="text" placeholder="Fisken123" id="username" name="username" required>
             <br><br>
+
             <label for="password">Password:</label>
             <input type="password" id="password" name="password" required>
             <br><br>
+
             <label for="email">Email:</label>
             <input type="email" placeholder="test@gmail.com" id="email" name="email" required>
             <br><br>
+
             <label for="city">Your City:</label>
             <input type="text" placeholder="Frederiksberg" id="city" name="city" required>
             <br><br>
+
             <label for="interests">Your Interests</label>
             <input type="text" placeholder="Basketball, Movies" id="interests" name="interests" required>
             <br><br>
+
             <label for="gender">Gender:</label>
             <select name="gender" id="gender" required>
                 <option value="male">Male</option>
@@ -33,6 +41,7 @@
                 <option value="other">Other</option>
             </select>
             <br><br>
+
             <label for="preferredGender">Preferred Gender:</label>
             <select name="preferredGender" id="preferredGender" required>
                 <option value="male">Male</option>
@@ -40,38 +49,34 @@
                 <option value="other">Other</option>
             </select>
             <br><br>
+
             <label for="age">Age:</label>
             <input type="text" id="age" name="age" required>
             <br><br>
+
             <button type="submit" id="submitButton">Sign up</button>
+            </div>
+
         </form>
-        </div>
-        <form action="http://localhost:3000/admin" method="POST" role="form" enctype="application/json">
-        <div id="loginDiv">
-            <h1 id="h1Login">Admin login</h1>
-            <br>
-            <label for="email">Email:</label>
-            <input name="email" type="text" placeholder="test@gmail.com" required>
-            <br><br>
-            <label for="password">Password:</label>
-            <input name="password" type="password" placeholder="Password" required>
-            <br><br>
-            <button type="submit" id="submitButton">Login</button>
-        </div>
-    </form>
-</div>
-<form action="http://localhost:3000/users/login" method="POST" role="form" enctype="application/json">
+
+    <form action="http://localhost:3000/users/login" method="POST" role="form" enctype="application/json">
+
     <div id="userLogin">
         <h1 id="h1userLogin">User Login</h1>
         <br>
+
         <label for="email">Email:</label>
         <input type="text" name="email" placeholder="test@gmail.com" required>
         <br><br>
+
         <label for="password">Password:</label>
         <input type="password" name="password" placeholder="Password" required>
         <br><br>
+
         <button type="submit" id="submitButton">Login</button>
     </div>
+  </div>
 </form>
+
 </body>
 </html>

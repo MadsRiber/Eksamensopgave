@@ -12,6 +12,7 @@
     margin-right: 15%;
     margin-left: 20%;
 }
+
 #h1SignUp{
     text-align: center;
 }
@@ -22,17 +23,18 @@
     margin-left: 15%;
     margin-right: 20%;
 }
+
 #h1Login{
     text-align: center;
 }
+
 #submitButton{
     margin-left: 30%;
 }
+
 #userLogin{
     border: 20px rgb(12, 12, 12);
     background-color: rgb(32, 31, 95);
-    margin-left: 62%;
-    margin-right: 10%;
     width: 500px;
     color: white;
     text-align: center;

@@ -12,7 +12,6 @@ const flash = require("express-flash")
 
 //Jeg kan nu lave routes
 const userRoute = require("./Views/Routes/Users");
-const adminRoute = require("./Views/Routes/Admin");
 
 
 //Connecter til min database
@@ -21,16 +20,15 @@ mongoose.connect(process.env.DB_CONNECTION,
 
 //Sørger for at bruge de ting jeg har required
 app.use(session({
-      secret: "secret",
-      cookie: {maxAge : 60000},
-      resave: false,
-      saveUninitialized: false
-      }));
+    secret: "secret",
+    cookie: {maxAge : 60000},
+    resave: false,
+    saveUninitialized: false
+    }));
 app.use(flash());
 app.use(bodyParser.json());
 app.use(methodOverride("_method"))
 app.use("/users", userRoute);
-app.use("/admin", adminRoute);
 app.use(express.static("./Views/css/"));
 //Kig lidt mere ind på det her session noget, og forstå hvad der foregår
 //https://www.youtube.com/watch?v=bneHBwzMD9A&ab_channel=AndreVermeulen
