@@ -8,7 +8,6 @@ const mongoose = require("mongoose")
 //describe tests
 describe('Check if user is saved', function(){
 
-    //create tests
     it('Saves new user', function (done) {
         var user1 = new User({
             username: "Mads",
